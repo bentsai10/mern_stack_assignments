@@ -1,0 +1,22 @@
+
+.hookForm{
+    margin: 5px auto;
+    display: block;
+    width: fit-content;
+}
+label{
+    display:flex;
+    margin-right:auto;
+}
+input{
+    display: flex;
+    margin-left: auto;
+}
+.formGroup{
+    width: 300px;
+    display: flex;
+    margin-bottom: 10px;
+}
+button{
+    margin: 10px auto;
+}
