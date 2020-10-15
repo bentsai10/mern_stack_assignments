@@ -2,13 +2,12 @@ import React, {useState} from 'react';
 
 const BoxGenerator = ({setBox, box}) =>{
     const [newColor, setNewColor] = useState("");
+    const[colorError, setColorError] = useState("");
 
     const onChange = (e) => {
         setNewColor(e.target.value);
     }
-
-    const[colorError, setColorError] = useState("");
-
+    
     const isColor = (strColor)=>{
         var s = new Option().style;
         s.color = strColor;
