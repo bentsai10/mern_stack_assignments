@@ -1,10 +1,12 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
 
-const BoxGenerator = (props) =>{
-    const currentState = props.currentState;
-    const add = props.add;
+const BoxGenerator = ({setBox, box}) =>{
+    const [newColor, setNewColor] = useState("");
 
-    const [color, setColor] = useState("");
+    const onChange = (e) => {
+        setNewColor(e.target.value);
+    }
+
     const[colorError, setColorError] = useState("");
 
     const isColor = (strColor)=>{
@@ -13,30 +15,32 @@ const BoxGenerator = (props) =>{
         return s.color == strColor;
     }
 
-    const handleColor = (e) => {
-        e.preventDefault();
-        if(isColor(color)){
+    const grabColor = () =>{
+        if(isColor(newColor)){
             setColorError("");
-            currentState.push(color);
-            add(currentState);
+            setBox({
+                ...box, 
+                colors: [...box.colors, newColor]
+            })
+            setNewColor("");
         }else{
             setColorError("Not a valid color!");
         }
-    };
+        
+    }
 
     
 
     return(
-        <form style = {{marginTop: 20}} onSubmit={handleColor}>
-            <label style = {{fontSize: 20, marginRight: 10}}>Color:</label>
-            <input style = {{width: 500}} onChange = { (e) => setColor(e.target.value)}></input>
+        <div>
+            <input onChange = {onChange} type = "text" name = "newColor" value = {newColor} style = {{marginTop: 10, marginRight: 10}}>
+            </input>
+            <button onClick = {grabColor}>Add Box</button>
             {
-                colorError?
-                <p style = {{color:'red'}}>{colorError}</p>: ''
+                colorError? <p style = {{color: 'red'}}>Not a valid color</p>:
+                ""
             }
-            <button style = {{marginLeft:10}}>Submit</button>
-            <p>{color}</p>
-        </form>
+        </div>
     );
 }
 

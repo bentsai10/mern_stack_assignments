@@ -3,18 +3,19 @@ import logo from './logo.svg';
 import './App.css';
 
 import BoxGenerator from './components/BoxGenerator.js'
-import BoxDisplay from './components/BoxDisplay.js'
+import Box from './components/Box.js'
 
 function App() {
-  const [blocks, setBlocks] = useState([]);
+  const [blocks, setBlocks] = useState({
+      colors:[],
+    });
 
-  const addBlocks = (blocks) =>{
-    setBlocks(blocks);
-  }
   return (
     <div className="App">
-      <BoxGenerator currentState = {blocks} add = {addBlocks}></BoxGenerator>
-      <BoxDisplay currentState = {blocks}></BoxDisplay>
+      <BoxGenerator setBox = {setBlocks} box = {blocks}></BoxGenerator>
+      {blocks.colors.map((color) => (
+        <Box color = {color}></Box>
+      ))}
     </div>
   );
 }
