@@ -1,38 +1,33 @@
-import React, {useState} from 'react';
+import React, { useContext } from "react";
+import TabsContext from "../context/Context";
 
-const Tab = ({title, content, setText}) =>{
-    const [checkedState, setCheckedState] = useState(false)
-    const [tabStyle, setTabStyle] = useState({
-        backgroundColor: 'lightgray',
-        color: 'black',
-        display: "block",
-        marginTop: 10,
-        marginRight:10,
-    });
-    const checkClicked = (e) => {
-        if(checkedState){
-            setTabStyle({
-                backgroundColor: 'lightgray',
-                color: 'black',
-                display: "block",
-                marginTop: 10,
-                marginRight:10,
-            });
-        }else{
-            setTabStyle({
-                backgroundColor: 'black',
-                color: 'white',
-                display: "block",
-                marginTop: 10,
-                marginRight:10,
-            });
-            setText(content);
-        }
-        setCheckedState(!checkedState);
+const Tab = () => {
+  const context = useContext(TabsContext);
+  console.log(context);
+
+  const onClick = (e, i) => {
+    let buttons = document.getElementsByClassName("btn btn-light");
+    for (let button of buttons) {
+      console.log(button);
+      button.style.backgroundColor = "white";
     }
-    return <div>
-        <button onClick = {checkClicked} style = {tabStyle}>{title}</button>
-    </div>
-}
+    context.setState({
+      ...context.state,
+      active: i
+    });
+    console.log(e.target);
+    e.target.style.backgroundColor = "blue";
+    // set "active" to the index position
+  };
 
+  return (
+    <div className="container">
+      {context.state.tabs.map((item, i) => (
+        <button onClick={e => onClick(e, i)} className="btn btn-light">
+          Tab {i + 1}{" "}
+        </button>
+      ))}
+    </div>
+  );
+};
 export default Tab;
